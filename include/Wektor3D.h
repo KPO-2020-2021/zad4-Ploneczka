@@ -1,5 +1,7 @@
-#pragma once
-
+#pragma once/**
+@file Wektor3D.h
+@brief Tutaj znajduje sie Wektor3D wraz z definicja.
+*/
 #include "Macierz3x3.h"
 #include <iostream>
 #include <math.h>
@@ -10,50 +12,65 @@ class Vector {
 
 private:
 
-    T tab[SIZE];     //Tablica wektora
+    T tab[SIZE];     ///Tablica wektora
 
 public:
 
-    Vector();
+     /**
+    @brief konstruktor domyslny 
+    @return Vector wypelniony zerami 
 
+    */
+    Vector();
+    /**
+    @brief konstruktor parametryczny 
+    @return Vector wypelniony podanymi wartosciami
+
+    */
     Vector(T a[SIZE]);
 
-    Vector operator + (const Vector &v) const;
+    Vector operator + (const Vector &v) const; ///< przeciazany operator dodawania dla klasy Vecotr
 
-    Vector operator - (const Vector &v) const;
+    Vector operator - (const Vector &v) const;///< przeciazany operator odejmowania dla klasy Vecotr
 
-    Vector operator * (const T &tmp) const;
+    Vector operator * (const T &tmp) const;///< przeciazany operator mnozenia dla klasy Vecotr
 
-    Vector operator / (const T &tmp) const;
+    Vector operator / (const T &tmp) const;///< przeciazany operator dzielenia dla klasy Vecotr
     template<typename T1,   int SIZE1>
-    friend Vector<T1, SIZE1> operator * (Matrix<T1, SIZE1> m1, Vector<T1, SIZE1> tmp);           // Operator mnożenia przez wektor
+    friend Vector<T1, SIZE1> operator * (Matrix<T1, SIZE1> m1, Vector<T1, SIZE1> tmp);    ///< przeciazany operator mnożenia przez wektor
    
     template<typename T1,   int SIZE1>
-    friend bool operator == (Vector<T1, SIZE1> vec1, Vector<T1, SIZE1> vec2);
-    
-    const T &operator [] (int index) const;
+    friend bool operator == (Vector<T1, SIZE1> vec1, Vector<T1, SIZE1> vec2);   ///< przeciazany operator porownania wektorow
+    /**
+    @brief  indeks wektora
+    @return  Wartosc wektora w danym miejscu tablicy.
 
+    */
+    const T &operator [] (int index) const;
+    /**
+    @brief  indeks wektora
+    @return  Wartosc wektora w danym miejscu tablicy jako stala. 
+
+    */
     T &operator [] (int index);
 
-    Vector rotacja_x(const double &kat) const;
-    Vector rotacja_y(const double &kat) const;
-    Vector rotacja_z(const double &kat) const;
+    Vector rotacja_x(const double &kat) const;   ///< rotacja w osi X
+    Vector rotacja_y(const double &kat) const;   ///< rotacja w osi Y
+    Vector rotacja_z(const double &kat) const;   ///< rotacja w osi Z
+    /**
+    @brief sprawdzam dlugosc wektora
+    @return dlugosc wektora
 
+    */
     double dl_boku () const;
 
 };
 template<typename T,   int SIZE>
-std::ostream &operator << (std::ostream &out, Vector<T, SIZE> const &tmp);
+std::ostream &operator << (std::ostream &out, Vector<T, SIZE> const &tmp); ///< przeciazany operator wypisywania
 template<typename T,   int SIZE>
-std::istream &operator >> (std::istream &in, Vector<T, SIZE> &tmp);
+std::istream &operator >> (std::istream &in, Vector<T, SIZE> &tmp);   ///< przeciazony operator wypisywania
 
-/******************************************************************************
- |  Konstruktor klasy Vector.                                                 |
- |  Argumenty:                                                                |
- |      Brak argumentow.                                                      |
- |  Zwraca:                                                                   |
- |      Tablice wypelniona wartoscia 0.                                       |
- */
+
 template<typename T,   int SIZE>
 Vector<T, SIZE>::Vector() {
     for ( int i = 0; i < SIZE; i++) {
@@ -62,13 +79,6 @@ Vector<T, SIZE>::Vector() {
 }
 
 
-/******************************************************************************
- |  Konstruktor klasy Vector.                                                 |
- |  Argumenty:                                                                |
- |      tmp - Jednowymiarowa tablica typu double.                             |
- |  Zwraca:                                                                   |
- |      Tablice wypelniona wartosciami podanymi w argumencie.                 |
- */
 template<typename T,   int SIZE>
 Vector<T, SIZE>::Vector(T tmp[SIZE]) {
     for (int i = 0; i < SIZE; i++) {
@@ -77,15 +87,6 @@ Vector<T, SIZE>::Vector(T tmp[SIZE]) {
 }
 
 
-/******************************************************************************
- |  Realizuje dodawanie dwoch wektorow.                                       |
- |  Argumenty:                                                                |
- |      this - pierwszy skladnik dodawania,                                   |
- |      v - drugi skladnik dodawania.                                         |
- |  Zwraca:                                                                   |
- |      Sume dwoch skladnikow przekazanych jako wskaznik                      |
- |      na parametr.                                                          |
- */
 template<typename T,   int SIZE>
 Vector<T, SIZE> Vector<T, SIZE>::operator + (const Vector<T, SIZE> &v) const{
     Vector<T, SIZE> result;
@@ -96,15 +97,6 @@ Vector<T, SIZE> Vector<T, SIZE>::operator + (const Vector<T, SIZE> &v) const{
 }
 
 
-/******************************************************************************
- |  Realizuje odejmowanie dwoch wektorow.                                     |
- |  Argumenty:                                                                |
- |      this - pierwszy skladnik odejmowania,                                 |
- |      v - drugi skladnik odejmowania.                                       |
- |  Zwraca:                                                                   |
- |      Roznice dwoch skladnikow przekazanych jako wskaznik                   |
- |      na parametr.                                                          |
- */
 template<typename T,   int SIZE>
 Vector<T, SIZE> Vector<T,SIZE>::operator - (const Vector<T,SIZE> &v) const {
     Vector<T, SIZE> result;
@@ -115,15 +107,6 @@ Vector<T, SIZE> Vector<T,SIZE>::operator - (const Vector<T,SIZE> &v) const {
 }
 
 
-/******************************************************************************
- |  Realizuje mnozenie wektora przez liczbe zmiennoprzecinkowa.               |
- |  Argumenty:                                                                |
- |      this - pierwszy skladnik mnozenia (wektor),                           |
- |      v - drugi skladnik mnozenia (liczba typu double).                     |
- |  Zwraca:                                                                   |
- |      Iloczyn dwoch skladnikow przekazanych jako wskaznik                   |
- |      na parametr.                                                          |
- */
 template<typename T,   int SIZE>
 Vector<T,SIZE> Vector<T, SIZE>::operator * (const T &tmp) const {
     Vector<T, SIZE> result;
@@ -134,15 +117,6 @@ Vector<T,SIZE> Vector<T, SIZE>::operator * (const T &tmp) const {
 }
 
 
-/******************************************************************************
- |  Realizuje dzielenie dwoch wektorow.                                       |
- |  Argumenty:                                                                |
- |      this - licznik dzielenia,                                             |
- |      v - mianownik dzielenia.                                              |
- |  Zwraca:                                                                   |
- |      Iloraz dwoch skladnikow przekazanych jako wskaznik                    |
- |      na parametr.                                                          |
- */
 template<typename T,   int SIZE>
 Vector<T,SIZE> Vector<T, SIZE>::operator / (const T &tmp)const{
     Vector<T, SIZE> result;
@@ -155,13 +129,6 @@ Vector<T,SIZE> Vector<T, SIZE>::operator / (const T &tmp)const{
 }
 
 
-/******************************************************************************
- |  Funktor wektora.                                                          |
- |  Argumenty:                                                                |
- |      index - index wektora.                                                |
- |  Zwraca:                                                                   |
- |      Wartosc wektora w danym miejscu tablicy jako stala.                   |
- */
 template<typename T,   int SIZE>
 const T &Vector<T, SIZE>::operator [] (int index) const {
     if (index < 0 || index >= SIZE) {
@@ -171,25 +138,12 @@ const T &Vector<T, SIZE>::operator [] (int index) const {
 }
 
 
-/******************************************************************************
- |  Funktor wektora.                                                          |
- |  Argumenty:                                                                |
- |      index - index wektora.                                                |
- |  Zwraca:                                                                   |
- |      Wartosc wektora w danym miejscu tablicy.                              |
- */
 template<typename T,   int SIZE>
 T &Vector<T, SIZE>::operator[](int index) {
     return const_cast<T &>(const_cast<const Vector<T, SIZE> *>(this)->operator[](index));
 }
 
 
-/******************************************************************************
- |  Przeciazenie operatora <<                                                 |
- |  Argumenty:                                                                |
- |      out - strumien wejsciowy,                                             |
- |      tmp - wektor.                                                         |
- */
 template<typename T,   int SIZE>
 std::ostream &operator << (std::ostream &out, Vector<T, SIZE> const &tmp) {
     for (int i = 0; i < SIZE; i++) {
@@ -211,12 +165,6 @@ bool operator == (Vector<T, SIZE> vec1, Vector<T, SIZE> vec2)
 }
 
 
-/******************************************************************************
- |  Przeciazenie operatora >>                                                 |
- |  Argumenty:                                                                |
- |      in - strumien wyjsciowy,                                              |
- |      tmp - wektor.                                                         |
- */
 template<typename T,   int SIZE>
 std::istream &operator >> (std::istream &in, Vector <T, SIZE>&tmp) {
     for (int i = 0; i < SIZE; i++) {
@@ -277,14 +225,6 @@ Vector<T, SIZE> Vector<T, SIZE>::rotacja_z(const double &kat) const
     return obrot* *this;
 }
 
-/******************************************************************************
- |  Realizuje mnozenie macierzy przez wektor.                                 |
- |  Argumenty:                                                                |
- |      this - macierz, czyli pierwszy skladnik mnozenia,                     |
- |      v - wektor, czyli drugi skladnik mnozenia.                            |
- |  Zwraca:                                                                   |
- |      Iloczyn dwoch skladnikow przekazanych jako wektor.                    |
- */
 template<typename T,   int SIZE>
 Vector<T, SIZE> operator * (Matrix<T, SIZE> m1, Vector<T, SIZE> tmp) {
     Vector<T, SIZE> result;

@@ -1,4 +1,7 @@
-#pragma once
+#pragma once/**
+@file Macierz3x3.h
+@brief Tutaj znajduje sie Macierz3x3 wraz z definicja.
+*/
 
 #include <iostream>
 #include <cstdlib>
@@ -9,35 +12,47 @@ template<typename T,   int SIZE>
 class Matrix {
 
 private:
-    T value[SIZE][SIZE];               // Wartosci macierzy
+    T value[SIZE][SIZE];               ///< Wartosci macierzy
 
 public:
-    Matrix(T [SIZE][SIZE]);            // Konstruktor klasy
+    /**
+    @brief konstruktor parametryczny
+    @return Macierz wypelniona wartosciami podanymi w argumencie.  
 
-    Matrix();                               // Konstruktor klasy
+    */
+   
+    Matrix(T [SIZE][SIZE]);            
+     /**
+    @brief konstruktor domyslny 
+    @return Macierz wypelniona zerami 
 
-    Matrix operator + (Matrix tmp);
+    */
+    Matrix();                              
 
-    Matrix operator * (Matrix tmp);
+    Matrix operator + (Matrix tmp);  ///< przeciazony operator dodawania macierzy 
 
+    Matrix operator * (Matrix tmp); ///< przeciazony operator mnozenia macierzy 
+    /**
+    @brief indeks macierzy 
+    @return Wartosc macierzy w danym miejscu tablicy. 
+
+    */    
     T  &operator () (unsigned int row, unsigned int column);
     template<typename P,   int SIZE1>
-    friend bool operator == (Matrix<P, SIZE1> mat1, Matrix<P, SIZE1> mat2);
-    
+    friend bool operator == (Matrix<P, SIZE1> mat1, Matrix<P, SIZE1> mat2); ///< przeciazony operator porownania macierzy 
+    /**
+    @brief indeks macierzy 
+    @return Wartosc macierzy w danym miejscu tablicy jako stala.
+
+    */  
     const T &operator () (unsigned int row, unsigned int column) const;
 };
 template<typename T,   int SIZE>
-std::istream &operator>>(std::istream &in, Matrix<T, SIZE> &mat);
+std::istream &operator>>(std::istream &in, Matrix<T, SIZE> &mat);  ///< przeciazony operator wypisywania dla macierzy 
 template<typename T,   int SIZE>
-std::ostream &operator<<(std::ostream &out, Matrix<T,SIZE> const &mat);
+std::ostream &operator<<(std::ostream &out, Matrix<T,SIZE> const &mat); ///< przeciazony operator wczytywania dla macierzy 
 
-/******************************************************************************
- |  Konstruktor klasy Matrix.                                                 |
- |  Argumenty:                                                                |
- |      Brak argumentow.                                                      |
- |  Zwraca:                                                                   |
- |      Macierz wypelnione wartoscia 0.                                       |
- */
+
 template<typename T,   int SIZE>
 Matrix<T, SIZE>::Matrix() {
     for (int i = 0; i < SIZE; i++) {
@@ -48,13 +63,6 @@ Matrix<T, SIZE>::Matrix() {
 }
 
 
-/******************************************************************************
- |  Konstruktor parametryczny klasy Matrix.                                              |
- |  Argumenty:                                                                |
- |      tmp - dwuwymiarowa tablica z elementami typu double.                               |
- |  Zwraca:                                                                   |
- |      Macierz wypelniona wartosciami podanymi w argumencie.                 |
- */
 template<typename T,   int SIZE>
 Matrix<T, SIZE>::Matrix(T tmp[SIZE][SIZE]) {
     for (int i = 0; i < SIZE; i++) {
@@ -64,14 +72,6 @@ Matrix<T, SIZE>::Matrix(T tmp[SIZE][SIZE]) {
     }
 }
 
-/******************************************************************************
- |  Funktor macierzy                                                          |
- |  Argumenty:                                                                |
- |      row - numer wiersza.                                                  |
- |      column - numer kolumny.                                               |
- |  Zwraca:                                                                   |
- |      Wartosc macierzy w danym miejscu tablicy.                             |
- */
 template<typename T,   int SIZE>
 T &Matrix<T, SIZE>::operator()(unsigned int row, unsigned int column) {
 
@@ -87,14 +87,6 @@ T &Matrix<T, SIZE>::operator()(unsigned int row, unsigned int column) {
 }
 
 
-/******************************************************************************
- |  Funktor macierzy                                                          |
- |  Argumenty:                                                                |
- |      row - numer wiersza.                                                  |
- |      column - numer kolumny.                                               |
- |  Zwraca:                                                                   |
- |      Wartosc macierzy w danym miejscu tablicy jako stala.                  |
- */
 template<typename T,   int SIZE>
 const T &Matrix<T, SIZE>::operator () (unsigned int row, unsigned int column) const {
 
@@ -109,14 +101,7 @@ const T &Matrix<T, SIZE>::operator () (unsigned int row, unsigned int column) co
     return value[row][column];
 }
 
-/******************************************************************************
- |  Przeciążenie dodawania macierzy                                                          |
- |  Argumenty:                                                                |
- |      this - macierz, czyli pierwszy skladnik dodawania,                     |
- |      v - wektor, czyli drugi skladnik dodawania.                                               |
- |  Zwraca:                                                                   |
- |      Macierz - iloczyn dwóch podanych macierzy.                  |
- */
+
 template<typename T,   int SIZE>
 Matrix<T, SIZE> Matrix<T, SIZE>::operator + (Matrix<T, SIZE> tmp) {
     Matrix<T, SIZE> result;
@@ -143,12 +128,6 @@ for (int i = 0; i < SIZE; ++i)
  return wynik;
 }
 
-/******************************************************************************
- |  Przeciazenie operatora >>                                                 |
- |  Argumenty:                                                                |
- |      in - strumien wyjsciowy,                                              |
- |      mat - macierz.                                                         |
- */
 template<typename T,   int SIZE>
 std::istream &operator>>(std::istream &in, Matrix<T, SIZE> &mat) {
     for (int i = 0; i < SIZE; i++) {
@@ -160,17 +139,11 @@ std::istream &operator>>(std::istream &in, Matrix<T, SIZE> &mat) {
 }
 
 
-/******************************************************************************
- |  Przeciazenie operatora <<                                                 |
- |  Argumenty:                                                                |
- |      out - strumien wejsciowy,                                             |
- |      mat - macierz.                                                        |
- */
 template<typename T,   int SIZE>
 std::ostream &operator<<(std::ostream &out, const Matrix<T, SIZE> &mat) {
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
-            out << "| " << mat(i, j) << " | "; //warto ustalic szerokosc wyswietlania dokladnosci liczb
+            out << "| " << mat(i, j) << " | "; 
         }
         std::cout << std::endl;
     }

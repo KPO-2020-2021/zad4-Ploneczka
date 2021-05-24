@@ -40,6 +40,7 @@ find_lto(CXX)
 set(SOURCES          # All .cpp files in src/
     src/lacze_do_gnuplota.cpp
     include/Macierz3x3.h
+    include/Macierz4x4.h
     include/Wektor3D.h
     include/Prostopadloscian.h
     include/lacze_do_gnuplota.h

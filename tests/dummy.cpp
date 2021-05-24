@@ -259,13 +259,162 @@ TEST_CASE("Prostopadloscian translacja")
   }
   CHECK_EQ(cub2, cub1);
 }
-// TEST_CASE("Rotacja prostopadlsocian X")
-// {
-//   Cuboid cub1, cub2;
-//   double kat = 180;
+TEST_CASE("Rotacja prostopadlsocian  o katy 90, 90, 90")
+{
+  Vector<double, 3> w1,w2,w3,w4,w5,w6,w7,w8, wi1,wi2,wi3,wi4,wi5,wi6,wi7,wi8 ;
+  double kat1 = 90, kat2 = 90, kat3 = 90;
   
+      wi1[0] = 8;
+      wi1[1] = 3;
+      wi1[2] = 5;
 
-//   cub1 = cub1.rotacja_x(kat);
-//   CHECK_EQ(wek2, wek1);
-// }
+      wi2[0] = 8;
+      wi2[1] = 6;
+      wi2[2] = 5;
 
+      wi3[0] = 8;
+      wi3[1] = 3;
+      wi3[2] = 3;
+
+      wi4[0] = 8;
+      wi4[1] = 6;
+      wi4[2] = 3;
+
+      wi5[0] = 3;
+      wi5[1] = 3;
+      wi5[2] = 3;
+      
+      wi6[0] = 3;
+      wi6[1] = 6;
+      wi6[2] = 3;
+      
+      wi7[0] = 3;
+      wi7[1] = 3;
+      wi7[2] = 5;
+      
+      wi8[0] = 3;
+      wi8[1] = 6;
+      wi8[2] = 5;
+    
+    Vector<double, 3> tab2[8] ={wi1, wi2, wi3, wi4, wi5, wi6, wi7, wi8};
+    Cuboid cub1(tab2);
+
+  cub1.rotacja_x(kat1);
+  cub1.rotacja_y(kat2);
+  cub1.rotacja_z(kat3);
+
+      w1[0] = 5;
+      w1[1] = 3;
+      w1[2] = -8;
+
+      w2[0] = 5;
+      w2[1] = 6;
+      w2[2] = -8;
+
+      w3[0] = 3;
+      w3[1] = 3;
+      w3[2] = -8;
+
+      w4[0] = 3;
+      w4[1] = 6;
+      w4[2] = -8;
+
+      w5[0] = 3;
+      w5[1] = 3;
+      w5[2] = -3;
+      
+      w6[0] = 3;
+      w6[1] = 6;
+      w6[2] = -3;
+      
+      w7[0] = 5;
+      w7[1] = 3;
+      w7[2] = -3;
+      
+      w8[0] = 5;
+      w8[1] = 6;
+      w8[2] = -3;
+  Vector<double, 3> tab[8] ={w1, w2, w3, w4, w5, w6, w7, w8};
+  Cuboid cub2(tab);
+  CHECK_EQ(cub2, cub1);
+}
+TEST_CASE("Rowne boki")
+{
+Vector<double, 3> wi1,wi2,wi3,wi4,wi5,wi6,wi7,wi8 ;
+  
+      wi1[0] = 8;
+      wi1[1] = 3;
+      wi1[2] = 5;
+
+      wi2[0] = 8;
+      wi2[1] = 6;
+      wi2[2] = 5;
+
+      wi3[0] = 8;
+      wi3[1] = 3;
+      wi3[2] = 3;
+
+      wi4[0] = 8;
+      wi4[1] = 6;
+      wi4[2] = 3;
+
+      wi5[0] = 3;
+      wi5[1] = 3;
+      wi5[2] = 3;
+      
+      wi6[0] = 3;
+      wi6[1] = 6;
+      wi6[2] = 3;
+      
+      wi7[0] = 3;
+      wi7[1] = 3;
+      wi7[2] = 5;
+      
+      wi8[0] = 3;
+      wi8[1] = 6;
+      wi8[2] = 5;
+    
+    Vector<double, 3> tab2[8] ={wi1, wi2, wi3, wi4, wi5, wi6, wi7, wi8};
+    Cuboid cub1(tab2);
+  CHECK_FALSE(!(cub1.sprawdz_boki()));
+}
+TEST_CASE("Rozne boki")
+{
+Vector<double, 3> wi1,wi2,wi3,wi4,wi5,wi6,wi7,wi8 ;
+  
+      wi1[0] = 8;
+      wi1[1] = 3;
+      wi1[2] = 5;
+
+      wi2[0] = 8;
+      wi2[1] = 6;
+      wi2[2] = 5;
+
+      wi3[0] = 8;
+      wi3[1] = 3;
+      wi3[2] = 3;
+
+      wi4[0] = 8;
+      wi4[1] = 6;
+      wi4[2] = 3;
+
+      wi5[0] = 3;
+      wi5[1] = 3;
+      wi5[2] = 3;
+      
+      wi6[0] = 3;
+      wi6[1] = 6;
+      wi6[2] = 21;
+      
+      wi7[0] = 3;
+      wi7[1] = 3;
+      wi7[2] = 5;
+      
+      wi8[0] = 3;
+      wi8[1] = 5;
+      wi8[2] = 7;
+    
+    Vector<double, 3> tab2[8] ={wi1, wi2, wi3, wi4, wi5, wi6, wi7, wi8};
+    Cuboid cub1(tab2);
+  CHECK_FALSE(cub1.sprawdz_boki());
+}
